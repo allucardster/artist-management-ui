@@ -1,9 +1,9 @@
 Artist Management - UI
 =======================
-User interface for [Artist Management API](https://github.com/allucardster/artist-management)
 
 Requirements
 ============
+- Working [Artist Management API](https://github.com/allucardster/artist-management) instance
 - Docker `>= 18.x`
 - Docker Compose `>= 1.24.x`
 
