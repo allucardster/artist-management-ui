@@ -1,24 +1,79 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { ClientContextProvider } from 'react-fetching-library';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link
+} from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import client from './api/client';
+import Artists from "./artists";
+import Login from "./login";
+import useAuth from './auth';
 
 function App() {
+  useEffect(() => {
+    document.title = "Artist Management";
+  });
+
+  const auth = useAuth();
+
+  if (!auth.token || auth.isExpired) {
+    return (
+      <ClientContextProvider client={client}>
+        <Router>
+          <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+            <Navbar.Brand href="/">Artist Management</Navbar.Brand>
+          </Navbar>
+          <Container fluid>
+            <Switch>
+              <Route path="/login">
+                <Login callback={auth.saveToken} />
+              </Route>
+              <Route path="/">
+              <Redirect
+                  to={{
+                    pathname: "/login"
+                  }}
+                />
+              </Route>
+            </Switch>
+          </Container>
+        </Router>
+      </ClientContextProvider>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ClientContextProvider client={client}>
+      <Router>
+        <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+          <Navbar.Brand href="/">Artist Management</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Link to="/" className="nav-link">Artists</Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Container fluid>
+          <Switch>
+            <Route path="/artists">
+              <Artists />
+            </Route>
+            <Route path="/">
+              <Redirect
+                to={{
+                  pathname: "/artists"
+                }}
+              />
+            </Route>
+          </Switch>
+        </Container>
+      </Router>
+    </ClientContextProvider>
   );
 }
 
