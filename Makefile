@@ -5,3 +5,5 @@ help: ## show this help
 	@egrep '^(.+)\:\ .*##\ (.+)' ${MAKEFILE_LIST} | sed 's/:.*##/#/' | column -t -c 2 -s '#'
 up: ## up all containers
 	docker-compose up -d --remove-orphans
+down: ## stop all containers
+	docker-compose down
