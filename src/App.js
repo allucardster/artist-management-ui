@@ -4,12 +4,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
-  Link
+  Redirect
 } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 import client from './api/client';
-import Artists from "./artists";
+import Logs from "./logs";
 import Login from "./login";
 import useAuth from './auth';
 
@@ -51,22 +50,16 @@ function App() {
       <Router>
         <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
           <Navbar.Brand href="/">Artist Management</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Link to="/" className="nav-link">Artists</Link>
-            </Nav>
-          </Navbar.Collapse>
         </Navbar>
         <Container fluid>
           <Switch>
-            <Route path="/artists">
-              <Artists />
+            <Route path="/logs">
+              <Logs />
             </Route>
             <Route path="/">
               <Redirect
                 to={{
-                  pathname: "/artists"
+                  pathname: "/logs"
                 }}
               />
             </Route>

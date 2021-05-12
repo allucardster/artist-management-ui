@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import LogList from './LogList';
 
-function Artists() {
+function Logs() {
   return (
     <React.Fragment>
       <Route>
-        <h1>Artist LIST</h1>
+        <LogList />
       </Route>
     </React.Fragment>
   );
 };
 
-export default Artists;
+export default Logs;
